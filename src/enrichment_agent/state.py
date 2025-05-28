@@ -16,53 +16,11 @@ from langgraph.graph import add_messages
 class InputState:
     """Input state defines the interface between the graph and the user (external API)."""
 
-    topic: str = field(
-        default="Top 5 chip providers for LLM Training",
-        metadata={
-             "The topic for which the agent is tasked to gather information."
-        },
-    )
-   
+    topic: str 
+    "The topic for which the agent is tasked to gather information."
 
-    extraction_schema: dict[str, Any] = field(
-        default={
-            "type": "object",
-            "properties": {
-                "companies": {
-                    "type": "array",
-                    "items": {
-                        "type": "object",
-                        "properties": {
-                            "name": {"type": "string", "description": "Company name"},
-                            "technologies": {
-                                "type": "string",
-                                "description": "Brief summary of key technologies used by the company",
-                            },
-                            "market_share": {
-                                "type": "string",
-                                "description": "Overview of market share for this company",
-                            },
-                            "future_outlook": {
-                                "type": "string",
-                                "description": "Brief summary of future prospects and developments in the field for this company",
-                            },
-                            "key_powers": {
-                                "type": "string",
-                                "description": "Which of the 7 Powers (Scale Economies, Network Economies, Counter Positioning, Switching Costs, Branding, Cornered Resource, Process Power) best describe this company's competitive advantage",
-                            },
-                        },
-                        "required": ["name", "technologies", "market_share", "future_outlook"],
-                    },
-                    "description": "List of companies",
-                }
-            },
-            "required": ["companies"],
-        },
-        metadata={
-             "The json schema defines the information the agent is tasked with filling out."
-        },
-    )
-    
+    extraction_schema: dict[str, Any]
+    "The json schema defines the information the agent is tasked with filling out."
 
     info: Optional[dict[str, Any]] = field(default=None)
     "The info state tracks the current extracted data for the given topic, conforming to the provided schema. This is primarily populated by the agent."
